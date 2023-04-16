@@ -9,7 +9,8 @@
         <button class="mt-6">
             <a href="/notes" class="text-blue-500 underline">Go Back</a>
         </button>
-        <form METHOD="post">
+        <form method="post">
+            <input type="hidden" name="_method" value="delete">
             <input type='hidden' name='id' value="<?= $note['id'] ?>">
             <button class="mt-2 text-sm text-red-500">Delete</button>
         </form>
