@@ -2,12 +2,14 @@
 
 namespace Core;
 
+use Core\Session;
+
 class Authenticator
 {
     public function attempt($email, $password)
     {
         //match the credentials
-        $user = App::resolve(Databae::class)->query('SELECT * FROM users WHERE email = :email', [
+        $user = App::resolve(Database::class)->query('SELECT * FROM users WHERE email = :email', [
             'email' => $email
         ])->find();
 
@@ -34,13 +36,6 @@ class Authenticator
 
     public function logout()
     {
-        //empty the session array
-        $_SESSION = [];
-        //Delete the current session
-        session_destroy();
-
-        //Expire the cookie
-        $params = session_get_cookie_params();
-        setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        Session::destroy();
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-
 //log in the user if the credientials match
 
+use Core\Session;
 use Core\Authenticator;
 use Http\Form\LoginForm;
-
 
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -19,9 +18,10 @@ if ($form->validate($email, $password)) {
         redirect('/');
     }
 
-    $form->$error('email', 'No matching account found for that email address and password.');
+    $form->error('email', 'No matching account found for that email address and password.');
 };
 
-return view('session/create.view.php', [
-    'errors' => $form->errors()
-]);
+
+Session::flash('errors', $form->errors());
+
+return redirect('/login');
