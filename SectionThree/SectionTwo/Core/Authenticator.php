@@ -17,7 +17,7 @@ class Authenticator
             //Need to check the password provided against the password in the database
             if (password_verify($password, $user['password'])) {
                 $this->login([
-                    'email => $email'
+                    'email' => $email
                 ]);
                 return true;
             }

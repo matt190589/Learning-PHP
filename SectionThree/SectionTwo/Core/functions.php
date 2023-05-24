@@ -4,13 +4,12 @@ use Core\Response;
 
 function dd($value)
 {
-    echo '<pre>';
+    echo "<pre>";
     var_dump($value);
-    echo '</pre>';
+    echo "</pre>";
 
     die();
 }
-
 
 function urlIs($value)
 {
@@ -26,11 +25,13 @@ function abort($code = 404)
     die();
 }
 
-function authorize($condition, $status = Response::FROBIDDEN)
+function authorize($condition, $status = Response::FORBIDDEN)
 {
     if (!$condition) {
         abort($status);
     }
+
+    return true;
 }
 
 function base_path($path)
@@ -41,6 +42,7 @@ function base_path($path)
 function view($path, $attributes = [])
 {
     extract($attributes);
+
     require base_path('views/' . $path);
 }
 
@@ -48,4 +50,9 @@ function redirect($path)
 {
     header("location: {$path}");
     exit();
+}
+
+function old($key, $default = '')
+{
+    return Core\Session::get('old')[$key] ?? $default;
 }
